@@ -183,19 +183,26 @@ def update_user(user_id : int , user : UpdateUser):
         update = {}
         user_key = user_account_db.fetch({"id" : user_id})._items[0]["key"]
         if user.first_name != None:
-            update["first_name"] = user.first_name
+            update["first_name"] = user.first_name.upper()
         if user.last_name != None:
-            update["last_name"] = user.last_name
+            update["last_name"] = user.last_name.upper()
         if user.age != None:
             update["age"] = user.age
 
         try: 
             res = user_account_db.update(updates=update , key=user_key)
-            return {"status" : "user details updated"}
+            return {
+                "status" : "user details updated",
+                "details" : res
+            }
         except:
-            return{"status" : "unscussesfull"}
+            return{
+                "status" : "unscussesfull"
+            }
     except:
-        return {"Status" : "There is no User"}
+        return {
+            "Status" : "There is no User"
+        }
 
 
 
